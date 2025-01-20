@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Maktab CRM - Guruhlar ro'yxati{% endblock %}
+
+{% block content %}
+    <h1>Guruhlar ro'yxati</h1>
+    <div class="actions">
+        <a href="{% url 'groups:group-add' %}" class="btn"><i class="fas fa-plus"></i> Yangi guruh qo'shish</a>
+        <input type="text" id="searchGroup" placeholder="Guruh qidirish" class="search-input">
+    </div>
+    <table id="groupsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Guruh nomi</th>
+                <th>O'quvchilar soni</th>
+                <th>Sinf rahbari</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+            <tbody>
+                {% for group in groups %}
+                    <tr>
+                        <td>{{ group.id }}</td>
+                        <td>{{ group.name }}</td>
+                        <td>{{ group.students.count }}</td>
+                        <td>{{ group.teacher }}</td>
+                        <td>
+                            <a href="{% url 'groups:detail' group.id %}" class="btn btn-sm"><i class="fas fa-eye"></i> Ko'rish</a>
+                            <a href="{% url 'groups:update' group.id %}" class="btn btn-sm"><i class="fas fa-edit"></i> Tahrirlash</a>
+                            <a href="{% url 'groups:delete' group.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">Guruhlar topilmadi.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    <div class="pagination">
+        <a href="#" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Oldingi</a>
+        <span>1</span>
+        <a href="#" class="btn btn-secondary">Keyingi <i class="fas fa-chevron-right"></i></a>
+    </div>
+{% endblock %}

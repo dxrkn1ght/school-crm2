@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if teacher %}Maktab CRM - O'qituvchi tahrirlash{% else %}Maktab CRM - Yangi O'qituvchi yaratish{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>{% if teacher %}O'qituvchi tahrirlash{% else %}Yangi O'qituvchi yaratish{% endif %}</h1>
+    <form id="createTeacherForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="firstName">Ism:</label>
+            <input type="text" id="firstName" name="first_name" placeholder="Ismingizni kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Familiya:</label>
+            <input type="text" id="lastName" name="last_name" placeholder="Familiyangizni kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">Fan:</label>
+            <select id="subject" name="subject" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefon:</label>
+            <input type="tel" id="phone" name="phone_number" placeholder="Telefon raqamingizni kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email manzilingizni kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="experience">Ish tajribasi (yil):</label>
+            <input type="number" id="experience" name="years_of_work" placeholder="Ish tajribangizni kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Rasm:</label>
+            <input type="file" id="image" name="photo" accept="image/*">
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Saqlash</button>
+            {% if teacher %}
+                <a href="{% url 'teachers:detail' teacher.id %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            {% else %}
+                <a href="{% url 'teachers:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}

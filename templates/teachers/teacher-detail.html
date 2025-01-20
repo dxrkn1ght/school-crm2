@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Maktab CRM - O'qituvchi ma'lumotlari{% endblock %}
+
+{% block content %}
+    <h1>O'qituvchi ma'lumotlari</h1>
+    <div class="teacher-details">
+        <div class="teacher-info">
+            <img src="{{ teacher.photo.url }}" alt="O'qituvchi rasmi" class="teacher-image">
+            <h2>{{ teacher.first_name }}</h2>
+            <h2>{{ teacher.last_name }}</h2>
+            <p>ID: <span>{{ teacher.id }}</span></p>
+            <p>Fan: <span>{{ teacher.subject }}</span></p>
+            <p>Telefon: <span>{{ teacher.phone_number }}</span></p>
+            <p>Email: <span>{{ teacher.email }}</span></p>
+            <p>Ish tajribasi: <span>{{ teacher.years_of_work }} yil</span></p>
+        </div>
+    </div>
+    <div class="actions">
+        <a href="{% url 'teachers:update' teacher.id %}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+        <a href="{% url 'teachers:delete' teacher.id %}" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+    </div>
+{% endblock %}

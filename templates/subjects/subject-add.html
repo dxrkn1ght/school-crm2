@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if subject %}Maktab CRM - Fan tarihlash{% else %}Maktab CRM - Yangi fan yaratish{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>{% if subject %}Fan tarihlash{% else %}Yangi fan yaratish{% endif %}</h1>
+    <form id="createSubjectForm" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="subjectName">Fan nomi:</label>
+            <input type="text" id="subjectName" name="name" placeholder="Fan nomini kiriting" required>
+        </div>
+        <div class="form-group">
+            <label for="teachers">O'qituvchilar:</label>
+            <select id="teachers" name="teachers" multiple required>
+                {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}">{{ teacher.first_name }} {{ teacher.last_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Saqlash</button>
+            {% if subject %}
+                <a href="{% url 'subjects:detail' subject.id %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            {% else %}
+                <a href="{% url 'subjects:list' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Bekor qilish</a>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}

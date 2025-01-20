@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Maktab CRM - Fan ma'lumotlari{% endblock %}
+
+{% block content %}
+    <h1>Fan ma'lumotlari</h1>
+    <div class="subject-details">
+        <div class="subject-info">
+            <h2>{{ subject.name }}</h2>
+            <p>ID: {{ subject.id }}</p>
+            <p>O'qituvchilar soni: {{ subject.teachers.count }}</p>
+        </div>
+        <div class="subject-teachers">
+            <h3>O'qituvchilar ro'yxati</h3>
+            <table id="teachersTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ism</th>
+                        <th>Familiya</th>
+                        <th>Amallar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teacher in teachers %}
+                        <tr>
+                            <td>{{ teacher.id }}</td>
+                            <td>{{ teacher.first_name }}</td>
+                            <td>{{ teacher.last_name }}</td>
+                            <td>
+                                <a href="{% url 'teachers:detail' teacher.id %}" class="btn btn-sm"><i class="fas fa-eye"></i> Ko'rish</a>
+                                <a href="{% url 'teachers:update' teacher.id %}" class="btn btn-sm"><i class="fas fa-edit"></i> Tahrirlash</a>
+                                <a href="{% url 'teachers:delete' teacher.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="actions">
+        <a href="{% url 'subjects:update' subject.id %}" class="btn"><i class="fas fa-edit"></i> Tahrirlash</a>
+        <a href="{% url 'subjects:delete' subject.id %}" class="btn btn-danger"><i class="fas fa-trash"></i> O'chirish</a>
+    </div>
+{% endblock %}
